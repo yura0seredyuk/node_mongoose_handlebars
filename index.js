@@ -1,3 +1,5 @@
+const {allowInsecurePrototypeAccess} = require('@handlebars/allow-prototype-access');
+const Handlebars = require('handlebars')
 const path = require('path');
 const express = require('express');
 const app = express();
@@ -6,16 +8,18 @@ const mainRouter = require('./routes/home');
 const coursesRouter = require('./routes/courses');
 const addRouter = require('./routes/add');
 const cartRouter = require('./routes/cart');
+const ordersRouter = require('./routes/orders');
 
 const mongoose = require('mongoose');
 
-var exphbs  = require('express-handlebars');
+var exphbs = require('express-handlebars');
 
 const User = require('./models/user');
 
 const hbs = exphbs.create({
   defaultLayout: 'main',
   extname: 'hbs',
+  handlebars: allowInsecurePrototypeAccess(Handlebars)
 })
 
 app.use( async (req, res, next) => {
@@ -40,6 +44,7 @@ app.use('/', mainRouter);
 app.use('/courses', coursesRouter);
 app.use('/add', addRouter);
 app.use('/cart', cartRouter);
+app.use('/orders', ordersRouter);
 
 const PORT = process.env.PORT || 4000;
 

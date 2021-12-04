@@ -1,6 +1,6 @@
 const toCurrency = price => {
-  return new Intl.NumberFormat('uk', {
-    currency: 'UAH',
+  return new Intl.NumberFormat('en-US', {
+    currency: 'USD',
     style: 'currency'
   }).format(price);
 }
@@ -46,3 +46,18 @@ if ($cart) {
     }
   })
 }
+
+toDate = date => {
+  return new Intl.DateTimeFormat('en-US', {
+    day: '2-digit',
+    month: 'long',
+    year: 'numeric',
+    hour: '2-digit',
+    minute: '2-digit',
+    seconds: '2-digit'
+  }).format(new Date(date))
+}
+
+document.querySelectorAll('.date').forEach(node => {
+  node.textContent = toDate(node.textContent)
+})
